@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Геометричний калькулятор</title>
+</head>
+<body>
+
+<h2>Обчислення площі та периметра різних геометричних фігур</h2>
+
+<label for="shape">Оберіть фігуру:</label>
+<select id="shape" onchange="showInput()">
+  <option value="rectangle">Прямокутник</option>
+  <option value="circle">Коло</option>
+  <option value="triangle">Трикутник</option>
+</select>
+
+<div id="inputs">
+  <div id="rectangleInputs">
+    <label for="rectWidth">Ширина:</label>
+    <input type="number" id="rectWidth">
+    <label for="rectHeight">Висота:</label>
+    <input type="number" id="rectHeight">
+  </div>
+  <div id="circleInputs" style="display:none;">
+    <label for="circleRadius">Радіус:</label>
+    <input type="number" id="circleRadius">
+  </div>
+  <div id="triangleInputs" style="display:none;">
+    <label for="triSide1">Сторона 1:</label>
+    <input type="number" id="triSide1">
+    <label for="triSide2">Сторона 2:</label>
+    <input type="number" id="triSide2">
+    <label for="triSide3">Сторона 3:</label>
+    <input type="number" id="triSide3">
+  </div>
+</div>
+
+<button onclick="calculate()">Обчислити</button>
+
+<p id="result"></p>
+
+<script>
+function showInput() {
+  var shape = document.getElementById("shape").value;
+  var inputs = document.getElementById("inputs").children;
+  
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].style.display = "none";
+  }
+  
+  document.getElementById(shape + "Inputs").style.display = "block";
+}
+
+function calculate() {
+  var shape = document.getElementById("shape").value;
+  var result = document.getElementById("result");
+  
+  if (shape === "rectangle") {
+    var width = parseFloat(document.getElementById("rectWidth").value);
+    var height = parseFloat(document.getElementById("rectHeight").value);
+    
+    var area = width * height;
+    var perimeter = 2 * (width + height);
+    
+    result.innerHTML = "Площа: " + area + ", Периметр: " + perimeter;
+  } else if (shape === "circle") {
+    var radius = parseFloat(document.getElementById("circleRadius").value);
+    
+    var area = Math.PI * Math.pow(radius, 2);
+    var perimeter = 2 * Math.PI * radius;
+    
+    result.innerHTML = "Площа: " + area.toFixed(2) + ", Довжина: " + perimeter.toFixed(2);
+  } else if (shape === "triangle") {
+    var side1 = parseFloat(document.getElementById("triSide1").value);
+    var side2 = parseFloat(document.getElementById("triSide2").value);
+    var side3 = parseFloat(document.getElementById("triSide3").value);
+    
+    var perimeter = side1 + side2 + side3;
+    var semiPerimeter = perimeter / 2;
+    var area = Math.sqrt(semiPerimeter * (semiPerimeter - side1) * (semiPerimeter - side2) * (semiPerimeter - side3));
+    
+    result.innerHTML = "Площа: " + area.toFixed(2) + ", Периметр: " + perimeter;
+  }
+}
+</script>
+
+</body>
+</html>
